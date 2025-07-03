@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Header from '@/components/layout/Header';
+
 const Home = () => {
-  return <div>정은혜의 포트폴리오</div>;
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+    </div>
+  );
 };
 
 export default Home;
