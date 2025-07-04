@@ -28,7 +28,7 @@ const item = {
 const Splash = () => {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center h-screen text-8xl font-bold text-white z-50 fixed top-0 left-0 w-full"
+      className="flex flex-col items-center justify-center h-screen text-8xl font-bold z-50 fixed top-0 left-0 w-full"
       variants={container}
       initial="hidden"
       animate="show"

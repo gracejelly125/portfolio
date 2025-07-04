@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
 
-import Splash from '@/components/Splash';
+import Splash from '@/components/layout/Splash';
 
 export default function ClientLayout({
   children,
