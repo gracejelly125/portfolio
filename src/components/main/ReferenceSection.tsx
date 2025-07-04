@@ -1,9 +1,37 @@
-import React from 'react';
+'use client';
+
+import React, { useRef, useEffect } from 'react';
+
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'framer-motion';
 
 const ReferenceSection = () => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' }); // 스크롤 여유
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [inView, controls]);
+
   return (
-    <section className="w-full min-h-screen flex flex-col justify-center">
-      <div className="max-w-2xl mx-auto space-y-6 py-8 px-10 rounded-xl bg-gray-300">
+    <section className="py-16 w-full flex flex-col justify-center">
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={controls}
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.8, ease: 'easeOut' },
+          },
+        }}
+        className="max-w-2xl mx-auto space-y-6 py-8 px-10 rounded-xl bg-gray-300"
+      >
         <h2 className="text-2xl tracking-tight text-center text-gray-800 font-pretendard-extrabold">
           추천서
         </h2>
@@ -48,7 +76,7 @@ const ReferenceSection = () => {
         <div className="text-right font-pretendard-extrabold text-xl mt-4 text-gray-800">
           이호련 @피스커버 CTO
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

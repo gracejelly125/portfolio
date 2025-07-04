@@ -7,7 +7,7 @@ import ReferenceSection from '@/components/main/ReferenceSection';
 
 const Main = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-40">
       <HeroSection />
       <AboutMeSection />
       <ReferenceSection />

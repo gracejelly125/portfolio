@@ -9,7 +9,13 @@ import Link from 'next/link';
 import { PROJECT_DATA } from '@/data/PROJECT_DATA';
 
 const filters = ['전체', '팀', '개인'];
-const highlightKeywords = ['HOLO', 'POKEDEX'];
+const highlightKeywords = [
+  'HOLO',
+  'POKEDEX',
+  'Daily Space',
+  'FanHearts',
+  'RIOT APP',
+];
 
 const ProjectSection = () => {
   const [activeFilter, setActiveFilter] = useState('전체');
@@ -20,7 +26,7 @@ const ProjectSection = () => {
       : PROJECT_DATA.filter((project) => project.type === activeFilter);
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-12">
+    <div className="flex flex-col items-center">
       <h1 className="text-5xl font-pretendard-extrabold gradient-text mb-6">
         PROJECTS
       </h1>
@@ -49,7 +55,7 @@ const ProjectSection = () => {
 
       {/* 프로젝트 리스트 */}
       {filteredProjects.map((project) => (
-        <div key={project.id} className="max-w-4xl border-b py-14">
+        <div key={project.id} className="max-w-4xl w-full border-b py-20 px-5">
           <p className="text-3xl">
             {(() => {
               const keyword = highlightKeywords.find((word) =>

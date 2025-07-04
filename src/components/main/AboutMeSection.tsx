@@ -72,7 +72,7 @@ const AboutMeSection = () => {
   const [showAwardImage, setShowAwardImage] = useState(false);
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center max-w-4xl mx-auto px-4">
+    <div className="w-full flex flex-col justify-center max-w-4xl mx-auto">
       <div className="flex pb-10 border-b">
         <div className="flex-1">
           <h3 className="text-4xl mb-5">Experience</h3>
