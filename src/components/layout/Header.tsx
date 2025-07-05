@@ -20,6 +20,14 @@ const Header = () => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setMenuOpen(false); // 메뉴 닫기
+  };
+
   return (
     <>
       <header
@@ -53,16 +61,20 @@ const Header = () => {
             >
               <X size={30} />
             </button>
-            <nav className="flex flex-col space-y-6 text-2xl">
-              <a href="#hero" onClick={toggleMenu}>
+
+            <nav className="flex flex-col space-y-6 text-4xl items-start">
+              <button type="button" onClick={() => scrollToSection('hero')}>
                 Home
-              </a>
-              <a href="#projects" onClick={toggleMenu}>
+              </button>
+              <button type="button" onClick={() => scrollToSection('about')}>
+                About
+              </button>
+              <button type="button" onClick={() => scrollToSection('reference')}>
+                Reference
+              </button>
+              <button type="button" onClick={() => scrollToSection('projects')}>
                 Projects
-              </a>
-              <a href="#contact" onClick={toggleMenu}>
-                Contact
-              </a>
+              </button>
             </nav>
           </motion.div>
         )}

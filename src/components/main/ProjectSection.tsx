@@ -26,25 +26,25 @@ const ProjectSection = () => {
       : PROJECT_DATA.filter((project) => project.type === activeFilter);
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-5xl font-pretendard-extrabold gradient-text mb-6">
+    <section id="projects" className="scroll-mt-16 flex flex-col items-center">
+      <h1 className="text-6xl font-pretendard-extrabold gradient-text mb-6">
         PROJECTS
       </h1>
 
       {/* 필터 바 */}
-      <div className="mt-4 mb-6 flex justify-center space-x-3 relative">
+      <div className="mt-4 mb-6 flex justify-center space-x-3 relative border rounded-full py-1.5 px-2">
         {filters.map((filter) => (
           <button
             key={filter}
             onClick={() => setActiveFilter(filter)}
-            className={`relative w-16 text-center px-4 py-2 font-semibold transition-colors duration-200 ${
+            className={`relative w-16 text-center px-4 py-2 transition-colors duration-200 ${
               activeFilter === filter ? 'text-white' : 'text-gray-500'
             }`}
           >
             {activeFilter === filter && (
               <motion.div
                 layoutId="filterIndicator"
-                className="absolute inset-0 bg-purple-500 rounded-full -z-10"
+                className="absolute inset-0 bg-gray-700 rounded-full -z-10"
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               />
             )}
@@ -55,7 +55,7 @@ const ProjectSection = () => {
 
       {/* 프로젝트 리스트 */}
       {filteredProjects.map((project) => (
-        <div key={project.id} className="max-w-4xl w-full border-b py-20 px-5">
+        <div key={project.id} className="max-w-4xl w-full border-b py-14 px-5">
           <p className="text-3xl">
             {(() => {
               const keyword = highlightKeywords.find((word) =>
@@ -107,31 +107,33 @@ const ProjectSection = () => {
             </div>
           </div>
 
-          <div className="mt-10 mb-6">
+          <div className="my-10">
             {project.link ? (
               <Link
                 href={project.link}
-                className="border py-2 px-4 rounded-md hover:bg-white hover:text-black"
                 target="_blank"
-                rel="noopener noreferrer"
+                className="group link-hover-underline py-2 px-2"
               >
-                프로젝트 구경하러 가기
+                <span className="link-hover-underline-text">
+                  프로젝트 배포 링크
+                </span>
+                <span className="link-hover-underline-bg" />
               </Link>
             ) : null}
           </div>
 
-          <div className="flex justify-center">
-            <Image
+          <div className="mt-14 flex justify-center w-[90%] mx-auto">
+            <Image 
               src={project.image.src}
               alt={project.image.alt}
-              width={800}
-              height={800}
+              width={1000}
+              height={1000}
               unoptimized
             />
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 };
 
