@@ -31,7 +31,7 @@ const HeroSection = () => {
         함께 성장하는 개발자, 정은혜입니다.
       </motion.h2>
 
-      <div className="mt-14 flex space-x-10 text-xl">
+      <div className="mt-8 md:mt-14 flex space-x-4 md:space-x-10 md:text-xl">
         <MotionLink
           href="https://github.com/gracejelly125"
           target="_blank"

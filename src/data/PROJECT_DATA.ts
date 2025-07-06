@@ -4,7 +4,10 @@ export interface Project {
   title: string;
   period: string;
   contribution: string;
-  teamInfo: string;
+  teamInfo: {
+    role: string;
+    count: number;
+  }[];
   roles: string[];
   skills: string[];
   image: {
@@ -12,6 +15,7 @@ export interface Project {
     alt: string;
   };
   link?: string;
+  githubLink?: string;
 }
 
 export const PROJECT_DATA: Project[] = [
@@ -21,13 +25,16 @@ export const PROJECT_DATA: Project[] = [
     title: '1인 가구 청년 자취생을 위한 정보 제공 서비스 HOLO',
     period: '2025.01 ~ 2025.02 (6주)',
     contribution: '25%',
-    teamInfo: 'FE - 5 / DESIGN - 1',
+    teamInfo: [
+      { role: 'FE', count: 5 },
+      { role: 'DESIGN', count: 1 },
+    ],
     roles: [
       '꿀팁 공유 커뮤니티 기능 구현',
       '- Supabase 활용, 게시글 CRUD, 좋아요 및 댓글 실시간 데이터 처리',
       '- 좋아요/댓글: TanstackQuery 낙관적 업데이트 적용 → 사용자 경험 개선',
       '- 게시글 검색, 카테고리, 최신순/인기순 필터링 기능 → 사용자 편의성 향상',
-      '- 커스텀 모달 직접 구현 및 Zustand로 모달 상태 관리 → 전역 상태 관리 효율성 향상',
+      '- 커스텀 모달 구현 및 Zustand 모달 상태 관리 → 전역 상태 관리 효율성 향상',
       '- 스켈레톤 UI 로딩 페이지 구현 → 사용자 경험 개선',
     ],
     skills: [
@@ -45,6 +52,7 @@ export const PROJECT_DATA: Project[] = [
       src: '/images/honeytips.gif',
       alt: '꿀팁게시판 소개',
     },
+    githubLink: 'https://github.com/zi0w/HOLO',
   },
   {
     id: 2,
@@ -52,7 +60,10 @@ export const PROJECT_DATA: Project[] = [
     title: '인턴 | 팬 소통 및 포카 교환 플랫폼 FanHearts',
     period: '2025.03 ~ 2025.03 (2주)',
     contribution: '100%',
-    teamInfo: 'FE - 1 / DESIGN - 1',
+    teamInfo: [
+      { role: 'FE', count: 1 },
+      { role: 'DESIGN', count: 1 },
+    ],
     roles: [
       '신규 서비스 랜딩 페이지 개발',
       '- i18next 활용한 JSON 기반 다국어 시스템 구현',
@@ -81,14 +92,13 @@ export const PROJECT_DATA: Project[] = [
     },
     link: 'https://fanhearts.com/',
   },
-
   {
     id: 3,
     type: '개인',
     title: '매일의 순간들을 담아가는 공간 Daily Space',
     period: '2025.07 ~ 2025.07 (1주)',
     contribution: '100%',
-    teamInfo: 'FE - 1',
+    teamInfo: [{ role: 'FE', count: 1 }],
     roles: [
       'To Do List + Blog 서비스 개발',
       '- 하루의 할 일(To Do List)과 블로그 형식의 일기 작성 기능 제공',
@@ -114,6 +124,7 @@ export const PROJECT_DATA: Project[] = [
       alt: '데일리 스페이스 소개',
     },
     link: 'https://daily-space-five.vercel.app/',
+    githubLink: 'https://github.com/gracejelly125/DailySpace',
   },
   {
     id: 4,
@@ -121,7 +132,7 @@ export const PROJECT_DATA: Project[] = [
     title: '롤 무료 챔피언, 이번 주 누가 뜨나 바로 확인! RIOT APP',
     period: '2024.12 ~ 2024.12 (1주)',
     contribution: '100%',
-    teamInfo: 'FE - 1',
+    teamInfo: [{ role: 'FE', count: 1 }],
     roles: [
       'Riot API를 활용한 리그 오브 레전드 정보 앱 개발',
       '- Next.js와 TypeScript를 사용한 서버 및 클라이언트 데이터 페칭 구현',
@@ -144,6 +155,7 @@ export const PROJECT_DATA: Project[] = [
       alt: '리그 오브 레전드 챔피언 및 아이템 정보 앱',
     },
     link: 'https://riot-mu.vercel.app/',
+    githubLink: 'https://github.com/gracejelly125/Riot',
   },
   {
     id: 5,
@@ -151,10 +163,10 @@ export const PROJECT_DATA: Project[] = [
     title: '포켓몬 도감, 다양한 포켓몬을 한눈에! POKEDEX',
     period: '2024.11 ~ 2024.11 (1주)',
     contribution: '100%',
-    teamInfo: 'FE - 1',
+    teamInfo: [{ role: 'FE', count: 1 }],
     roles: [
       '포켓몬 카드 컬렉션 기능 구현',
-      '- Props Drilling → Context → Redux Toolkit으로 상태 관리 단계별 전환 구조 구현 ',
+      '- Props Drilling → Context → Redux Toolkit으로 상태 관리 단계별 전환 구조 구현',
       '- react-router-dom을 활용한 페이지 라우팅 및 상세 페이지 네비게이션 처리',
       '- Dashboard, PokemonList, PokemonCard 등 재사용 가능한 컴포넌트 구조 설계',
       '- toast UI 알림으로 중복 선택 및 제한 초과 시 사용자 피드백 UX 개선',
@@ -172,5 +184,6 @@ export const PROJECT_DATA: Project[] = [
       alt: '포케덱스 소개',
     },
     link: 'https://pokedex-pink-nine.vercel.app/',
+    githubLink: 'https://github.com/gracejelly125/pokedex',
   },
 ];
