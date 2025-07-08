@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,34 +20,44 @@ const highlightKeywords = [
 const ProjectSection = () => {
   const [activeFilter, setActiveFilter] = useState('전체');
 
+  const [openStates, setOpenStates] = useState<boolean[]>(
+    PROJECT_DATA.map(() => false),
+  );
+
   const filteredProjects =
     activeFilter === '전체'
       ? PROJECT_DATA
       : PROJECT_DATA.filter((project) => project.type === activeFilter);
 
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true });
+
   return (
-    <section
+    <motion.section
+      ref={sectionRef}
       id="projects"
       className="scroll-mt-16 flex flex-col items-center"
+      initial={{ opacity: 0, y: -40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 1.0, ease: 'easeOut' }}
     >
       <h1 className="text-4xl md:text-6xl font-pretendard-extrabold gradient-text mb-6 text-center">
         PROJECTS
       </h1>
 
-      {/* 필터 바 */}
-      <div className="mt-4 mb-6 flex flex-wrap justify-center gap-2 md:space-x-3 border rounded-full py-1.5 px-2">
+      <div className="mt-4 mb-6 flex flex-wrap justify-center md:space-x-1 border rounded-full py-1.5 px-2">
         {filters.map((filter) => (
           <button
             key={filter}
             onClick={() => setActiveFilter(filter)}
-            className={`relative px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-base rounded-full transition-colors duration-200 ${
+            className={`min-w-10 md:min-w-14 relative px-3 py-1.5 text-xs md:px-4 md:text-base rounded-full transition-colors duration-200 ${
               activeFilter === filter ? 'text-white' : 'text-gray-500'
             }`}
           >
             {activeFilter === filter && (
               <motion.div
                 layoutId="filterIndicator"
-                className="absolute inset-0 bg-gray-700 rounded-full -z-10"
+                className="absolute inset-0 bg-purple-500 rounded-full -z-10"
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               />
             )}
@@ -56,13 +66,11 @@ const ProjectSection = () => {
         ))}
       </div>
 
-      {/* 프로젝트 리스트 */}
-      {filteredProjects.map((project) => (
+      {filteredProjects.map((project, index) => (
         <div
           key={project.id}
           className="max-w-4xl w-full border-b py-6 md:py-14 px-5"
         >
-          {/* 제목 */}
           <p className="text-xl md:text-3xl">
             {(() => {
               const keyword = highlightKeywords.find((word) =>
@@ -85,7 +93,6 @@ const ProjectSection = () => {
             {project.period}
           </p>
 
-          {/* 기여도 & 역할 */}
           <div className="flex flex-col md:flex-row gap-5 md:gap-16">
             <div className="flex gap-2 md:gap-4">
               <p className="min-w-[60px] font-pretendard-extrabold text-sm md:text-base">
@@ -93,7 +100,21 @@ const ProjectSection = () => {
               </p>
               <div className="text-sm md:text-base">
                 <p>{project.contribution}</p>
-                <div className="flex flex-wrap text-sm md:text-base">
+                <div className="flex gap-1 mt-1">
+                  {[...Array(5)].map((_, idx) => {
+                    const filled =
+                      (parseInt(project.contribution) / 100) * 5 >= idx + 1;
+                    return (
+                      <div
+                        key={idx}
+                        className={`w-4 h-2 md:w-6 md:h-2.5 rounded-sm ${
+                          filled ? 'bg-purple-500' : 'bg-gray-300'
+                        }`}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="flex flex-col text-sm md:text-base mt-2">
                   {project.teamInfo.map((info, idx) => (
                     <p key={idx}>
                       {info.role} - {info.count}
@@ -114,7 +135,6 @@ const ProjectSection = () => {
             </div>
           </div>
 
-          {/* 스킬 */}
           <div className="mt-6 md:mt-10 flex flex-wrap gap-2">
             {project.skills.map((skill, index) => (
               <span
@@ -126,12 +146,66 @@ const ProjectSection = () => {
             ))}
           </div>
 
-          <div className="flex gap-4 my-6 md:my-10">
+          {project.troubleshooting && project.troubleshooting.length > 0 && (
+            <div className="mt-6 md:mt-10">
+              <button
+                onClick={() =>
+                  setOpenStates((prev) =>
+                    prev.map((open, i) => (i === index ? !open : open)),
+                  )
+                }
+                className="font-pretendard-extrabold text-base md:text-lg mb-3 flex items-center gap-1"
+              >
+                <motion.span
+                  animate={{ rotate: openStates[index] ? 90 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="inline-block mr-1"
+                >
+                  ▶
+                </motion.span>
+                트러블슈팅
+              </button>
+
+              <AnimatePresence>
+                {openStates[index] && (
+                  <motion.div
+                    key="troubleshooting"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <ul className="space-y-3 text-sm md:text-base">
+                      {project.troubleshooting.map((item, idx) => (
+                        <li
+                          key={idx}
+                          className="leading-relaxed p-6 bg-gray-900 rounded-xl"
+                        >
+                          <p className="mb-1">• {item.title}</p>
+                          <p className="pl-4 text-gray-400">
+                            <span className="text-gray-400">- 시도:</span>{' '}
+                            {item.attempt}
+                          </p>
+                          <p className="pl-4 text-gray-400">
+                            <span className="text-gray-400">- 해결:</span>{' '}
+                            {item.solution}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
+
+          <div className="flex gap-4 my-6">
             {project.link && (
               <Link
                 href={project.link}
                 target="_blank"
-                className="group link-hover-underline py-1 px-2 text-sm md:text-base inline-block"
+                className="group link-hover-underline py-1 px-2 text-sm md:text-lg inline-block"
               >
                 <span className="link-hover-underline-text">Live Demo</span>
                 <span className="link-hover-underline-bg" />
@@ -142,7 +216,7 @@ const ProjectSection = () => {
               <Link
                 href={project.githubLink}
                 target="_blank"
-                className="group link-hover-underline py-1 px-2 text-sm md:text-base inline-block"
+                className="group link-hover-underline py-1 px-2 text-sm md:text-lg inline-block"
               >
                 <span className="link-hover-underline-text">GitHub</span>
                 <span className="link-hover-underline-bg" />
@@ -150,8 +224,7 @@ const ProjectSection = () => {
             )}
           </div>
 
-          {/* 이미지 */}
-          <div className="mt-10 flex justify-center w-full">
+          <div className="mt-6 md:mt-10 flex justify-center w-full">
             <Image
               src={project.image.src}
               alt={project.image.alt}
@@ -163,7 +236,7 @@ const ProjectSection = () => {
           </div>
         </div>
       ))}
-    </section>
+    </motion.section>
   );
 };
 

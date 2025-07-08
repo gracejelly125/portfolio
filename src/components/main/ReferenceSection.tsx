@@ -54,7 +54,7 @@ const ReferenceSection = () => {
   return (
     <section
       id="reference"
-      className="py-16 w-full flex flex-col justify-center px-4 md:px-5"
+      className="scroll-mt-16 w-full flex flex-col justify-center px-4 md:px-5"
     >
       <div className="flex items-start justify-center mb-6 md:mb-10">
         <motion.div

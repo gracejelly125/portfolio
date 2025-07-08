@@ -1,3 +1,9 @@
+export interface TroubleshootingItem {
+  title: string;
+  attempt: string;
+  solution: string;
+}
+
 export interface Project {
   id: number;
   type: '팀' | '개인';
@@ -16,6 +22,7 @@ export interface Project {
   };
   link?: string;
   githubLink?: string;
+  troubleshooting?: TroubleshootingItem[];
 }
 
 export const PROJECT_DATA: Project[] = [
@@ -53,6 +60,28 @@ export const PROJECT_DATA: Project[] = [
       alt: '꿀팁게시판 소개',
     },
     githubLink: 'https://github.com/zi0w/HOLO',
+    troubleshooting: [
+      {
+        title: '클라이언트 - 서버 데이터 동기화 문제 및 서버액션 도입',
+        attempt:
+          'Tanstack Query의 캐싱 정책으로 인해 클라이언트가 데이터 동기화 지연 현상을 겪음',
+        solution:
+          'Next.js 서버액션을 도입하여 revalidatePath()로 서버 캐시를 명시적으로 무효화하고, 클라이언트 캐시 무효화 로직을 단순화하여 유지보수성을 향상시킴. 게시글, 좋아요, 댓글 데이터가 실시간에 가깝게 반영되도록 개선',
+      },
+      {
+        title: '모달 상태 관리 및 재사용성 문제 해결',
+        attempt:
+          '기존에는 페이지별로 독립적인 스토어와 컴포넌트로 관리하여 모달 상태 분산과 props drilling 문제 발생',
+        solution:
+          'Zustand를 활용해 모달 상태와 타입을 한 곳에서 관리하는 전용 스토어를 설계하여 버그를 제거하고 코드 가독성을 개선함',
+      },
+      {
+        title: 'Lighthouse 피드백 활용, 이미지 용량 최적화',
+        attempt: 'react-resizer 라이브러리 사용 시 타입스크립트 호환 문제 발생',
+        solution:
+          'FileReader Web API와 Canvas API를 활용해 이미지 압축 로직을 직접 구현. JPEG 포맷 재인코딩과 해상도 조절(0.7)을 통해 용량 평균 60% 감소, Lighthouse 점수 20% 상승, 초기 렌더링 속도 25% 단축',
+      },
+    ],
   },
   {
     id: 2,
@@ -91,6 +120,15 @@ export const PROJECT_DATA: Project[] = [
       alt: '팬하트 소개',
     },
     link: 'https://fanhearts.com/',
+    troubleshooting: [
+      {
+        title: 'Next.js 환경에서 i18next 언어 상태 불일치 문제 해결',
+        attempt:
+          '쿠키 기반 저장 방식으로 전환하고, useI18n 훅을 만들어 언어 변경 시 i18next와 쿠키를 동기화',
+        solution:
+          '18nProvider 컴포넌트에서 쿠키의 lang 값을 읽어 초기 언어 상태를 설정. useI18n 훅에서 언어 변경 시 쿠키와 i18next 언어를 함께 업데이트하여 일관된 상태 유지',
+      },
+    ],
   },
   {
     id: 3,
