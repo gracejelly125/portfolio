@@ -25,7 +25,7 @@ const Header = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setMenuOpen(false); // 메뉴 닫기
+    setMenuOpen(false);
   };
 
   return (

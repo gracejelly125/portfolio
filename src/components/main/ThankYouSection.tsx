@@ -45,31 +45,35 @@ const ThankYouSection = () => {
       </motion.div>
 
       <motion.p
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.8 }}
         transition={{ delay: 0.6, duration: 1 }}
         className="text-gray-500 text-sm md:text-lg max-w-xs md:max-w-xl mb-3 md:mb-4 px-2 md:px-0"
       >
-        궁금하신 점이나 연락은 언제든지 환영합니다
+        궁금한 점은 언제든 편하게 연락 주세요!
       </motion.p>
 
-      <button
+      <motion.button
         onClick={copyEmail}
         type="button"
         aria-label="Copy email address"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.8 }}
+        transition={{ delay: 1.2, duration: 0.8, ease: 'easeOut' }}
         className="flex items-center space-x-2 text-gray-300 hover:underline cursor-pointer text-base md:text-lg font-pretendard-bold"
       >
         <Mail size={18} />
         <span>{EMAIL}</span>
-      </button>
+      </motion.button>
 
       <AnimatePresence>
         {copied && (
           <motion.span
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
             className="mt-2 text-xs md:text-sm select-none bg-gray-400 text-black py-1 px-3 rounded-xl"
           >

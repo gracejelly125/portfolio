@@ -28,14 +28,12 @@ const fadeInFrom = (direction: 'left' | 'right'): MotionProps => ({
 const AboutMeSection = () => {
   return (
     <section id="about" className="scroll-mt-16 w-full max-w-4xl mx-auto">
-      {/* 타이틀 */}
+
       <h2 className="text-4xl md:text-5xl font-pretendard-extrabold gradient-text border-b pb-4 px-2">
         About Me
       </h2>
 
-      {/* Experience & Awards */}
       <div className="flex flex-col md:flex-row md:space-x-12 mt-8 md:mt-0 md:border-b md:py-10 px-2">
-        {/* Experience */}
         <motion.div className="flex-1" {...fadeInFrom('right')}>
           <h3 className="text-2xl md:text-3xl font-pretendard-bold mb-6">
             Experience
@@ -57,7 +55,6 @@ const AboutMeSection = () => {
           </div>
         </motion.div>
 
-        {/* Awards */}
         <motion.div className="flex-1 mt-10 md:mt-0" {...fadeInFrom('right')}>
           <h3 className="text-2xl md:text-3xl font-pretendard-bold mb-6">
             Awards
@@ -82,7 +79,6 @@ const AboutMeSection = () => {
         </motion.div>
       </div>
 
-      {/* Skills */}
       <motion.div className="mt-8 px-2" {...fadeInFrom('left')}>
         <h3 className="text-2xl md:text-3xl font-pretendard-bold mb-6">
           Skills
